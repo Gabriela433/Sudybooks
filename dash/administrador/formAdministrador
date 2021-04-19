@@ -1,0 +1,101 @@
+<?php
+$ruta="../../";
+$menu="administrador";
+include($ruta.'menu-lateral/menu-lateral.php');
+include($ruta.'config/Precarga.php');
+include($ruta.'header/header.php');
+include($ruta.'dao/Administrador.php');
+$administrador = new Administrador("","","","","","");
+$administrador->setConexion($bd);
+if (isset($_GET["id_admin"])) {
+  $administrador->setIdAdmin($_GET["id_admin"]);
+}
+?>
+
+<div class="main-panel">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+    <div class="container-fluid">
+      <div class="navbar-wrapper">
+        <div class="navbar-toggle">
+          <button type="button" class="navbar-toggler">
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </button>
+        </div>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+      </button>
+
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-user">
+          <div class="card-header">
+            <h5 class="card-title"><?=isset($_GET["id_admin"])?"Editar":"Agregar"?> Administrador</h5>
+          </div>
+          <div class="card-body">
+            <form action="<?=isset($_GET['id_admin'])?'editarAdministrador.php':'editarAdministrador.php'?>" method="post">
+              <div class="row">
+
+                <?php if(isset($_GET["id_admin"])){ ?>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>ID Administrador</label>
+                      <input type="text" class="form-control" placeholder="ID Administrador" name="id_admin" value=" <?=$administrador->getIdAdmin();?> " required readonly>
+                    </div>
+                  </div>
+
+                <?php }?>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" placeholder="Nombre" name="administrador" value="<?=isset($_GET['id_admin'])?$administrador->getNombre():""?>" required>
+                </div><br>
+                <div class="form-group">
+                    <label>Apellido paterno</label>
+                    <input type="text" class="form-control" placeholder="Apellido paterno" name="apellido_pa" value="<?=isset($_GET['id_admin'])?$administrador->getApellido_pa():""?>" required>
+                </div><br>
+                <div class="form-group">
+                    <label>Apellido materno</label>
+                    <input type="text" class="form-control" placeholder="Apellido materno" name="apellido_ma" value="<?=isset($_GET['id_admin'])?$administrador->getApellido_ma():""?>" required>
+                </div><br>
+                  <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input type="text" class="form-control" placeholder="Correo" name="correo" value="<?=isset($_GET['id_admin'])?$administrador->getCorreo():""?>" required>
+
+                  </div><br>
+                  <div class="form-group">
+                    <label>password</label>
+                    <input type="text" class="form-control" placeholder="Password" name="password" value="<?=isset($_GET['id_admin'])?$administrador->getPassword():""?>" required>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="update ml-auto mr-auto">
+                  <button type="submit" class="btn btn-primary btn-round"><?=isset($_GET["id_admin"])?"Editar Administrador":"Agregar Usuario"?></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer footer-black  footer-white ">
+    
+  </footer>
+</div>
+
+<?php
+include($ruta.'footer/footer.php');
+?>
